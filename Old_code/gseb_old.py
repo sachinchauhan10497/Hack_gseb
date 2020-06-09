@@ -31,22 +31,23 @@ def process_data(seat, f, fe):
         fe.write("  " + k + "-" + v)
     fe.write("\n")
 
-f = open("output.txt", "a")
-fe = open("extra_output", "a")
+if __name__ == "__main__":
+    f = open("output.txt", "a")
+    fe = open("extra_output", "a")
 
-start = 111111
-end = 999999
+    start = 111111
+    end = 999999
 
-num = start
-while num <= end:
-    x = "{:0>6d}".format(num)
-    seat = "B" + x
-    try:
-        process_data(seat, f, fe)
-        print(seat + " Done")
-    except:
-        print(seat + " Failed")
-    num = num + 1
-f.close()
-fe.close()
-print("That's The End !")
+    num = start
+    while num <= end:
+        x = "{:0>6d}".format(num)
+        seat = "B" + x
+        try:
+            process_data(seat, f, fe)
+            print(seat + " Done")
+        except:
+            print(seat + " Failed")
+        num = num + 1
+    f.close()
+    fe.close()
+    print("That's The End !")
