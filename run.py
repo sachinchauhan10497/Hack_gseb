@@ -68,7 +68,7 @@ def run_call_batch(prefix):
 
     batch_num = configs.INITIAL_BATCH_NUMBER
     while True:
-        
+
         if len(batch_marked) > 8000:
             break
         else:
