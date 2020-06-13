@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import configs
 import sys
+from random import random
+import numpy as np
 
 def get_student_data(url):
     response = requests.get(url = url)
@@ -33,6 +35,10 @@ def process_seat_number(seat):
     except:
         print('May you press it or May The Internet Connection has broken... Bye Bye...')
         f.close()
+        print('Batch_data results...' + str(len(configs.batch_data)))
+        for i in configs.batch_data:
+            if configs.batch_data[i]:
+                print(str(i))
         sys.exit()
 
     if 'Name' in data:
@@ -47,7 +53,10 @@ def save_basic_data(seat, name):
     f.write("\n" + name + " - " + seat)
 
 def add_triling_zeros(num):
-    return (configs.SEAT_NUMBER_DIGITS - len(str(num))) * '0' + str(num)
+    return add_triling_zeros(num, configs.SEAT_NUMBER_DIGITS)
+
+def add_triling_zeros(num, totalDigits):
+    return (totalDigits - len(str(num))) * '0' + str(num)
 
 def digit_up(num, d):
     num = add_triling_zeros(num)
@@ -63,5 +72,17 @@ def digit_up(num, d):
         print(d)
         print("Exception in Jump !!!")
         return -1
+
+def generate_random_numbers(max, num):
+    ans = []
+    for i in range(0,num):
+        ans.append(int(random() * max))
+    return ans
+
+def generate_one_random_number(min, max):
+    return min + int(random() * (max - min + 1))
+
+def get_batch_test_values(max):
+    return np.union1d(configs.MUST_HAVE_NUMBERS, generate_random_numbers(max, configs.NUMBER_OF_TEST_RANDOM))
 
 f = open(configs.FILE_TO_SAVE_SEAT_NAME_PAIR, "a")
